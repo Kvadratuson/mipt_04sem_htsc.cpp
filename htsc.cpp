@@ -27,3 +27,58 @@ HTSC<T>::HTSC(const HTSC<T>& other)
     m_table = other.m_table;
     i_index = other.i_index;
 }
+
+template <class T>
+void HTSC<T>::emplace(T data)
+{
+    size_t i;
+    i = hash_function(data) % m_size + 1;
+    if (!m_table[i].f_is_busy) {
+        m_table[i].f_is_busy = true;
+        m_table[i].m_data = data;
+    }
+    else if (m_table[i].m_data != data) {
+        while (m_table[i].i_link != 0) {
+            i = m_table[i].i_link;
+            if (m_table[i].m_data == data)
+                return;
+        }
+        while (m_table[i_index].f_is_busy != false)
+            --i_index;
+        if (i_index == 0) {
+            throw IS_FULL;
+        }
+        else {
+            m_table[i_index].f_is_busy = true;
+            m_table[i_index].m_data = data;
+            m_table[i].i_link = i_index;
+        }
+    }
+}
+
+template <class T>
+void HTSC<T>::insert(T& data)
+{
+    size_t i;
+    i = hash_function(data) % m_size + 1;
+    if (!m_table[i].f_is_busy) {
+        m_table[i].f_is_busy = true;
+        m_table[i].m_data = data;
+    }
+    else if (m_table[i].m_data != data) {
+        while (m_table[i].i_link != 0) {
+            i = m_table[i].i_link;
+            if (m_table[i].m_data == data)
+                return;
+        }
+        while (m_table[i_index].f_is_busy != false)
+            --i_index;
+        if (i_index == 0) {
+            throw IS_FULL;
+        } else {
+            m_table[i_index].f_is_busy = true;
+            m_table[i_index].m_data = data;
+            m_table[i].i_link = i_index;
+        }
+    }
+}
