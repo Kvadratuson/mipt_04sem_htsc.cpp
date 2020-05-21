@@ -21,6 +21,7 @@ public:
 
     void insert(const T& data);
     void erase(const T& data);
+    bool find(const T& data);
 
     friend std::ostream& operator<<(std::ostream& out_stream, const HTSC<T>& hash_table)
     {

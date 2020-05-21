@@ -79,3 +79,25 @@ void HTSC<T>::erase(const T& data)
         throw NOT_FOUND;
     }
 }
+
+template <class T>
+bool HTSC<T>::find(const T& data)
+{
+    size_t i;
+    i = hash_function(data) % m_size + 1;
+    if ((!m_table[i].f_is_busy) && (m_table[i].i_link == 0)) {
+        return false;
+    }
+    else if (m_table[i].m_data == data) {
+        return true;
+    }
+    else {
+        while (m_table[i].i_link != 0) {
+            i = m_table[i].i_link;
+            if (m_table[i].m_data == data) {
+                return true;
+            }
+        }
+        return false;
+    }
+}

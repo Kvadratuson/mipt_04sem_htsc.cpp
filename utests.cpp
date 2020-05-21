@@ -209,6 +209,50 @@ int main()
     }
     std::cout << "Erase(...)->NOT_FOUND: PASSED" << std::endl;
 
+    /* Find("string") */
+    try {
+        if (hash_tables[4]->find("0")
+            || (!hash_tables[4]->find("1"))
+            || hash_tables[4]->find("2")
+            || (!hash_tables[4]->find("3"))
+            || hash_tables[4]->find("4")
+            || (!hash_tables[4]->find("5"))
+            || hash_tables[4]->find("6")
+            || (!hash_tables[4]->find("7"))
+            || hash_tables[4]->find("8")
+            || (!hash_tables[4]->find("9")))
+        {
+            std::cerr << "Find(\"string\"): FAILED" << std::endl;
+            exit(EXIT_FAILURE);
+        }
+    }
+    catch (const std::exception& exception) {
+        std::cerr << "Find(\"string\"): FAILED (" << exception.what() << ")" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    std::cout << "Find(\"string\"): PASSED" << std::endl;
+
+    /* Find(std::string) */
+    try {
+        for (std::size_t i = 0; i < TEST_DATA2_SIZE; i += 2) {
+            if (hash_tables[3]->find(test_data2[i])) {
+                std::cerr << "Find(std::string): FAILED" << std::endl;
+                exit(EXIT_FAILURE);
+            }
+        }
+        for (std::size_t i = 1; i < TEST_DATA2_SIZE; i += 2) {
+            if ((i != 9) && (!hash_tables[3]->find(test_data2[i]))) {
+                std::cerr << "Find(std::string): FAILED" << std::endl;
+                exit(EXIT_FAILURE);
+            }
+        }
+    }
+    catch (const std::exception& exception) {
+        std::cerr << "Find(std::string): FAILED (" << exception.what() << ")" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    std::cout << "Find(std::string): PASSED" << std::endl;
+
     /* Operator<< */
     try {
         std::cout << *hash_tables[0];
