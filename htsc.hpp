@@ -18,8 +18,7 @@ public:
     HTSC(std::size_t size);
     HTSC(const HTSC<T>& other);
 
-    void emplace(T data);
-    void insert(T& data);
+    void insert(const T& data);
 
     friend std::ostream& operator<<(std::ostream& out_stream, const HTSC<T>& hash_table)
     {
