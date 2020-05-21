@@ -101,3 +101,14 @@ bool HTSC<T>::find(const T& data)
         return false;
     }
 }
+
+template <class T>
+HTSC<T>& HTSC<T>::operator=(const HTSC<T>& other)
+{
+    if (this != &other) {
+        m_size = other.m_size;
+        m_table = other.m_table;
+        i_index = other.i_index;
+    }
+    return *this;
+}

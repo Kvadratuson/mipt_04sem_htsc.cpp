@@ -23,6 +23,8 @@ public:
     void erase(const T& data);
     bool find(const T& data);
 
+    HTSC& operator=(const HTSC& other);
+
     friend std::ostream& operator<<(std::ostream& out_stream, const HTSC<T>& hash_table)
     {
         out_stream << "Size = " << hash_table.m_size

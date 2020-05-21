@@ -253,10 +253,22 @@ int main()
     }
     std::cout << "Find(std::string): PASSED" << std::endl;
 
+    /* Operator= */
+    try {
+        *hash_tables[1] = *hash_tables[3];
+        *hash_tables[1] = *hash_tables[4];
+        *hash_tables[1] = *hash_tables[1];
+    }
+    catch (const std::exception& exception) {
+        std::cerr << "Operator=: FAILED (" << exception.what() << ")" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    std::cout << "Operator=: PASSED" << std::endl;
+
     /* Operator<< */
     try {
         std::cout << *hash_tables[0];
-        std::cout << *hash_tables[4];
+        std::cout << *hash_tables[1];
         std::cout << *hash_tables[2];
         std::cout << *hash_tables[3];
     }
