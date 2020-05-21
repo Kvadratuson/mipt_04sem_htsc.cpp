@@ -11,7 +11,8 @@ class HTSC
 public:
     enum ErrorCode
     {
-        IS_FULL = 2
+        IS_FULL = 2,
+        NOT_FOUND
     };
 
     HTSC();
@@ -19,6 +20,7 @@ public:
     HTSC(const HTSC<T>& other);
 
     void insert(const T& data);
+    void erase(const T& data);
 
     friend std::ostream& operator<<(std::ostream& out_stream, const HTSC<T>& hash_table)
     {
@@ -35,6 +37,9 @@ public:
         switch(error_code) {
             case(IS_FULL):
                 out_stream << "Hash table is full";
+                break;
+            case(NOT_FOUND):
+                out_stream << "Element is not found in hash table";
                 break;
         }
         return out_stream;

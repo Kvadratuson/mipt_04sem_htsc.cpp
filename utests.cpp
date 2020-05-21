@@ -49,7 +49,7 @@ std::string test_data2[] =
 
 int main()
 {
-    HTSC<std::string> *hash_tables[4];
+    HTSC<std::string> *hash_tables[5];
 
     /* Construct() */
     try {
@@ -120,9 +120,7 @@ int main()
 
     /* Insert(...)->IS_FULL */
     try {
-        for (std::size_t i = 0; i < TEST_DATA1_SIZE; ++i) {
-            hash_tables[2]->insert(test_data1[i]);
-        }
+        hash_tables[2]->insert(test_data1[0]);
     }
     catch (const HTSC<std::string>::ErrorCode& exception) {
         if (exception != HTSC<std::string>::IS_FULL) {
@@ -139,6 +137,7 @@ int main()
     /* Construct(copy) */
     try {
         hash_tables[3] = new HTSC<std::string>(*hash_tables[2]);
+        hash_tables[4] = new HTSC<std::string>(*hash_tables[0]);
     }
     catch (const std::exception& exception) {
         std::cerr << "Construct(copy): FAILED (" << exception.what() << ")" << std::endl;
@@ -146,9 +145,75 @@ int main()
     }
     std::cout << "Construct(copy): PASSED" << std::endl;
 
+    /* Erase("string") */
+    try {
+        hash_tables[4]->erase("0");
+        hash_tables[4]->erase("2");
+        hash_tables[4]->erase("4");
+        hash_tables[4]->erase("6");
+        hash_tables[4]->erase("8");
+    }
+    catch (const HTSC<std::string>::ErrorCode& exception) {
+        std::cerr << "Erase(\"string\"): FAILED (" << exception << ")" << std::endl;
+        exit(exception);
+    }
+    catch (const std::exception& exception) {
+        std::cerr << "Erase(\"string\"): FAILED (" << exception.what() << ")" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    std::cout << "Erase(\"string\"): PASSED" << std::endl;
+
+    /* Erase(std::string) */
+    try {
+        for (std::size_t i = 0; i < TEST_DATA2_SIZE; i += 2) {
+            hash_tables[3]->erase(test_data2[i]);
+        }
+        hash_tables[3]->erase(test_data2[9]);
+    }
+    catch (const HTSC<std::string>::ErrorCode& exception) {
+        std::cerr << "Erase(std::string): FAILED (" << exception << ")" << std::endl;
+        exit(exception);
+    }
+    catch (const std::exception& exception) {
+        std::cerr << "Erase(std::string): FAILED (" << exception.what() << ")" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    std::cout << "Erase(std::string): PASSED" << std::endl;
+
+    /* Erase(...)->NOT_FOUND */
+    try {
+        hash_tables[3]->erase(test_data2[0]);
+    }
+    catch (const HTSC<std::string>::ErrorCode& exception) {
+        if (exception != HTSC<std::string>::NOT_FOUND) {
+            std::cerr << "Erase(...)->NOT_FOUND: FAILED (" << exception << ")" << std::endl;
+            exit(exception);
+        }
+    }
+    catch (const std::exception& exception) {
+        std::cerr << "Erase(...)->NOT_FOUND: FAILED (" << exception.what() << ")" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    try {
+        hash_tables[3]->erase(test_data2[9]);
+    }
+    catch (const HTSC<std::string>::ErrorCode& exception) {
+        if (exception != HTSC<std::string>::NOT_FOUND) {
+            std::cerr << "Erase(...)->NOT_FOUND: FAILED (" << exception << ")" << std::endl;
+            exit(exception);
+        }
+    }
+    catch (const std::exception& exception) {
+        std::cerr << "Erase(...)->NOT_FOUND: FAILED (" << exception.what() << ")" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    std::cout << "Erase(...)->NOT_FOUND: PASSED" << std::endl;
+
     /* Operator<< */
     try {
         std::cout << *hash_tables[0];
+        std::cout << *hash_tables[4];
+        std::cout << *hash_tables[2];
         std::cout << *hash_tables[3];
     }
     catch (const std::exception& exception) {
