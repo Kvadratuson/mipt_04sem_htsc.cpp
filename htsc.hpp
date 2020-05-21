@@ -19,9 +19,9 @@ public:
     HTSC(std::size_t size);
     HTSC(const HTSC<T>& other);
 
-    void insert(const T& data);
-    void erase(const T& data);
-    bool find(const T& data);
+    void insert(const T& key);
+    void erase(const T& key);
+    bool find(const T& key);
 
     HTSC& operator=(const HTSC& other);
 
@@ -54,7 +54,7 @@ private:
     struct Element
     {
         bool f_is_busy;
-        T m_data;
+        T m_key;
         std::size_t i_link;
 
         friend std::ostream& operator<<(std::ostream& out_stream, const Element& element)
@@ -63,7 +63,7 @@ private:
                        << "\t\t"
                        << "Link = " << element.i_link
                        << "\t\t"
-                       << "Data = " << element.m_data;
+                       << "Key = " << element.m_key;
             return out_stream;
         }
     };

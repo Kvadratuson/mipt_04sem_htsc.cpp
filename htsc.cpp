@@ -29,18 +29,18 @@ HTSC<T>::HTSC(const HTSC<T>& other)
 }
 
 template <class T>
-void HTSC<T>::insert(const T& data)
+void HTSC<T>::insert(const T& key)
 {
     size_t i;
-    i = hash_function(data) % m_size + 1;
+    i = hash_function(key) % m_size + 1;
     if (!m_table[i].f_is_busy) {
         m_table[i].f_is_busy = true;
-        m_table[i].m_data = data;
+        m_table[i].m_key = key;
     }
-    else if (m_table[i].m_data != data) {
+    else if (m_table[i].m_key != key) {
         while (m_table[i].i_link != 0) {
             i = m_table[i].i_link;
-            if (m_table[i].m_data == data)
+            if (m_table[i].m_key == key)
                 return;
         }
         while (m_table[i_index].f_is_busy != false)
@@ -49,25 +49,25 @@ void HTSC<T>::insert(const T& data)
             throw IS_FULL;
         } else {
             m_table[i_index].f_is_busy = true;
-            m_table[i_index].m_data = data;
+            m_table[i_index].m_key = key;
             m_table[i].i_link = i_index;
         }
     }
 }
 
 template <class T>
-void HTSC<T>::erase(const T& data)
+void HTSC<T>::erase(const T& key)
 {
     size_t i;
-    i = hash_function(data) % m_size + 1;
+    i = hash_function(key) % m_size + 1;
     if ((!m_table[i].f_is_busy) && (m_table[i].i_link == 0)) {
         throw NOT_FOUND;
     }
     else {
         while (i != 0) {
-            if (m_table[i].m_data == data) {
+            if (m_table[i].m_key == key) {
                 m_table[i].f_is_busy = false;
-                m_table[i].m_data = T();
+                m_table[i].m_key = T();
                 if (i > i_index)
                     i_index = i;
                 return;
@@ -79,16 +79,16 @@ void HTSC<T>::erase(const T& data)
 }
 
 template <class T>
-bool HTSC<T>::find(const T& data)
+bool HTSC<T>::find(const T& key)
 {
     size_t i;
-    i = hash_function(data) % m_size + 1;
+    i = hash_function(key) % m_size + 1;
     if ((!m_table[i].f_is_busy) && (m_table[i].i_link == 0)) {
         return false;
     }
     else {
         while (i != 0) {
-            if (m_table[i].m_data == data)
+            if (m_table[i].m_key == key)
                 return true;
             i = m_table[i].i_link;
         }
