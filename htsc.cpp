@@ -63,18 +63,14 @@ void HTSC<T>::erase(const T& data)
     if ((!m_table[i].f_is_busy) && (m_table[i].i_link == 0)) {
         throw NOT_FOUND;
     }
-    else if (m_table[i].m_data == data) {
-        m_table[i].f_is_busy = false;
-        m_table[i].m_data = T();
-    }
     else {
-        while (m_table[i].i_link != 0) {
-            i = m_table[i].i_link;
+        while (i != 0) {
             if (m_table[i].m_data == data) {
                 m_table[i].f_is_busy = false;
                 m_table[i].m_data = T();
                 return;
             }
+            i = m_table[i].i_link;
         }
         throw NOT_FOUND;
     }
@@ -88,15 +84,11 @@ bool HTSC<T>::find(const T& data)
     if ((!m_table[i].f_is_busy) && (m_table[i].i_link == 0)) {
         return false;
     }
-    else if (m_table[i].m_data == data) {
-        return true;
-    }
     else {
-        while (m_table[i].i_link != 0) {
-            i = m_table[i].i_link;
-            if (m_table[i].m_data == data) {
+        while (i != 0) {
+            if (m_table[i].m_data == data)
                 return true;
-            }
+            i = m_table[i].i_link;
         }
         return false;
     }
