@@ -68,6 +68,8 @@ void HTSC<T>::erase(const T& data)
             if (m_table[i].m_data == data) {
                 m_table[i].f_is_busy = false;
                 m_table[i].m_data = T();
+                if (i > i_index)
+                    i_index = i;
                 return;
             }
             i = m_table[i].i_link;
