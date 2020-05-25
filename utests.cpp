@@ -278,5 +278,40 @@ int main()
     }
     std::cout << "Operator<<: PASSED" << std::endl;
 
+    /* Operator<< for ErrorCode */
+    try {
+        hash_tables[2]->insert(test_data1[0]);
+    }
+    catch (const HTSC<std::string>::ErrorCode& exception) {
+        if (exception != HTSC<std::string>::IS_FULL) {
+            std::cerr << "Operator<< for ErrorCode: FAILED (" << exception << ")" << std::endl;
+            exit(exception);
+        }
+        else {
+            std::cerr << exception << std::endl;
+        }
+    }
+    catch (const std::exception& exception) {
+        std::cerr << "Operator<< for ErrorCode: FAILED (" << exception.what() << ")" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    try {
+        hash_tables[3]->erase(test_data2[0]);
+    }
+    catch (const HTSC<std::string>::ErrorCode& exception) {
+        if (exception != HTSC<std::string>::NOT_FOUND) {
+            std::cerr << "Operator<< for ErrorCode: FAILED (" << exception << ")" << std::endl;
+            exit(exception);
+        }
+        else {
+            std::cerr << exception << std::endl;
+        }
+    }
+    catch (const std::exception& exception) {
+        std::cerr << "Operator<< for ErrorCode: FAILED (" << exception.what() << ")" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    std::cout << "Operator<< for ErrorCode: PASSED" << std::endl;
+
     exit(EXIT_SUCCESS);
 }
