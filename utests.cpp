@@ -4,6 +4,7 @@
 
 #define TEST_DATA1_SIZE 10
 #define TEST_DATA2_SIZE 26
+#define TEST_DATA3_SIZE 8
 std::string test_data1[] =
 {
     "mifihoiwikioguhoponjoavakecewbijasuminehjaruwadorhiftigirhozavab",
@@ -46,10 +47,68 @@ std::string test_data2[] =
     "y",
     "z"
 };
+std::vector<bool> test_data3[] =
+{
+    {false, false, false},
+    {false, false, true},
+    {false, true, false},
+    {false, true, true},
+    {true, false, false},
+    {true, false, true},
+    {true, true, false},
+    {true, true, true}
+};
+
+class Test
+{
+public:
+    Test() { m_bits.resize(0); }
+    Test(std::vector<bool>& bits): m_bits(bits) {};
+
+    friend std::ostream& operator<<(std::ostream& out_stream, const Test& test)
+    {
+        for (std::size_t i = 0; i < test.m_bits.size(); ++i)
+            out_stream << std::boolalpha << test.m_bits[i] << std::noboolalpha << " ";
+        return out_stream;
+    }
+
+    bool operator==(const Test& rhs)
+    {
+        if (m_bits.size() != rhs.m_bits.size())
+            return false;
+        for (std::size_t i = 0; i < m_bits.size(); ++i)
+            if (m_bits[i] != rhs.m_bits[i])
+                return false;
+        return true;
+    }
+    bool operator!=(const Test& rhs)
+    {
+        if (m_bits.size() != rhs.m_bits.size())
+            return true;
+        for (std::size_t i = 0; i < m_bits.size(); ++i)
+            if (m_bits[i] != rhs.m_bits[i])
+                return true;
+        return false;
+    }
+
+    std::vector<bool> m_bits;
+};
+
+namespace std
+{
+    template <> struct hash<Test>
+    {
+        std::size_t operator()(Test const& test) const noexcept
+        {
+            return std::hash<std::vector<bool>>{}(test.m_bits);
+        }
+    };
+}
 
 int main()
 {
     HTSC<std::string> *hash_tables[5];
+    HTSC<Test> *hash_table;
 
     /* Construct() */
     try {
@@ -312,6 +371,19 @@ int main()
         exit(EXIT_FAILURE);
     }
     std::cout << "Operator<< for ErrorCode: PASSED" << std::endl;
+
+    /* Additional test */
+    try {
+        hash_table = new HTSC<Test>();
+        for (std::size_t i = 0; i < TEST_DATA3_SIZE; ++i)
+            hash_table->insert(Test(test_data3[i]));
+        std::cout << *hash_table;
+    }
+    catch (const std::exception& exception) {
+        std::cerr << "Additional test: FAILED (" << exception.what() << ")" << std::endl;
+        exit(EXIT_FAILURE);
+    }
+    std::cout << "Additional test: PASSED" << std::endl;
 
     exit(EXIT_SUCCESS);
 }
