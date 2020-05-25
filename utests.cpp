@@ -2,9 +2,9 @@
 
 #include <string>
 
-#define TEST_DATA1_SIZE 10
-#define TEST_DATA2_SIZE 26
-#define TEST_DATA3_SIZE 8
+const std::size_t TEST_DATA1_SIZE =  10;
+const std::size_t TEST_DATA2_SIZE = 26;
+const std::size_t TEST_DATA3_SIZE = 8;
 std::string test_data1[] =
 {
     "mifihoiwikioguhoponjoavakecewbijasuminehjaruwadorhiftigirhozavab",
