@@ -1,9 +1,5 @@
 #include "htsc.hpp"
 
-#include <string>
-
-template class HTSC<std::string>;
-
 template <class T>
 HTSC<T>::HTSC()
 {

@@ -75,4 +75,6 @@ private:
     std::size_t i_index;
 };
 
+#include "htsc.ipp"
+
 #endif /* HTSC_CPP_HTSC_HPP */
