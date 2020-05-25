@@ -2,27 +2,24 @@
 
 template <class T>
 HTSC<T>::HTSC()
-{
-    m_size = c_default_size;
-    m_table.resize(m_size + 1);
-    i_index = m_size;
-}
+    : m_size(c_default_size)
+    , m_table(c_default_size + 1)
+    , i_index(c_default_size)
+{}
 
 template <class T>
 HTSC<T>::HTSC(std::size_t size)
-{
-    m_size = size;
-    m_table.resize(m_size + 1);
-    i_index = m_size;
-}
+    : m_size(size)
+    , m_table(size + 1)
+    , i_index(size)
+{}
 
 template <class T>
 HTSC<T>::HTSC(const HTSC<T>& other)
-{
-    m_size = other.m_size;
-    m_table = other.m_table;
-    i_index = other.i_index;
-}
+    : m_size(other.m_size)
+    , m_table(other.m_table)
+    , i_index(other.i_index)
+{}
 
 template <class T>
 void HTSC<T>::insert(const T& key)
