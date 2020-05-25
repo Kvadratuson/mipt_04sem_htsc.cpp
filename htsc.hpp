@@ -49,7 +49,7 @@ public:
     }
 
 private:
-    std::hash<T> hash_function;
+    std::hash<T> get_hash;
 
     struct Element
     {

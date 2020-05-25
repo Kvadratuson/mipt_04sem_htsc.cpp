@@ -28,7 +28,7 @@ template <class T>
 void HTSC<T>::insert(const T& key)
 {
     size_t i;
-    i = hash_function(key) % m_size + 1;
+    i = get_hash(key) % m_size + 1;
     if (!m_table[i].f_is_busy) {
         m_table[i].f_is_busy = true;
         m_table[i].m_key = key;
@@ -55,7 +55,7 @@ template <class T>
 void HTSC<T>::erase(const T& key)
 {
     size_t i;
-    i = hash_function(key) % m_size + 1;
+    i = get_hash(key) % m_size + 1;
     if ((!m_table[i].f_is_busy) && (m_table[i].i_link == 0)) {
         throw NOT_FOUND;
     }
@@ -78,7 +78,7 @@ template <class T>
 bool HTSC<T>::find(const T& key)
 {
     size_t i;
-    i = hash_function(key) % m_size + 1;
+    i = get_hash(key) % m_size + 1;
     if ((!m_table[i].f_is_busy) && (m_table[i].i_link == 0)) {
         return false;
     }
