@@ -1,6 +1,8 @@
 #ifndef HTSC_CPP_HTSC_HPP
 #define HTSC_CPP_HTSC_HPP
 
+/* HTSC --- Hash Table with Separate Chaining */
+
 #include <functional>
 #include <iostream>
 #include <vector>
@@ -17,13 +19,13 @@ public:
 
     HTSC();
     HTSC(std::size_t size);
-    HTSC(const HTSC<T>& other);
+    HTSC(const HTSC<T>& other) = default;
 
     void insert(const T& key);
     void erase(const T& key);
     bool find(const T& key);
 
-    HTSC& operator=(const HTSC& other);
+    HTSC& operator=(const HTSC& other) = default;
 
     friend std::ostream& operator<<(std::ostream& out_stream, const HTSC<T>& hash_table)
     {
@@ -67,8 +69,6 @@ private:
             return out_stream;
         }
     };
-
-    const std::size_t c_default_size = 10;
 
     std::size_t m_size;
     std::vector<Element> m_table;

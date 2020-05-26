@@ -2,10 +2,10 @@
 
 #include <string>
 
-const std::size_t TEST_DATA1_SIZE =  10;
+const std::size_t TEST_DATA1_SIZE = 10;
 const std::size_t TEST_DATA2_SIZE = 26;
 const std::size_t TEST_DATA3_SIZE = 8;
-std::string test_data1[] =
+const std::string test_data1[] =
 {
     "mifihoiwikioguhoponjoavakecewbijasuminehjaruwadorhiftigirhozavab",
     "boavalidigsetuwoimufoowjinurtarjuijdipfegpegijoiczuhasezfupterob",
@@ -18,7 +18,7 @@ std::string test_data1[] =
     "zopsilamtaizfusijeluzantabofdiformewkapzanoavalowuvsolejunomihip",
     "ribjigijwudbupapuhorahzomcacozsuipukokzaokuedmaocopeicdoihfuumiu"
 };
-std::string test_data2[] =
+const std::string test_data2[] =
 {
     "a",
     "b",
@@ -47,7 +47,7 @@ std::string test_data2[] =
     "y",
     "z"
 };
-std::vector<bool> test_data3[] =
+const std::vector<bool> test_data3[] =
 {
     {false, false, false},
     {false, false, true},
@@ -62,8 +62,8 @@ std::vector<bool> test_data3[] =
 class Test
 {
 public:
-    Test() { m_bits.resize(0); }
-    Test(std::vector<bool>& bits): m_bits(bits) {};
+    Test() = default;
+    Test(const std::vector<bool>& bits): m_bits(bits) {};
 
     friend std::ostream& operator<<(std::ostream& out_stream, const Test& test)
     {

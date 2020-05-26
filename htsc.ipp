@@ -2,23 +2,16 @@
 
 template <class T>
 HTSC<T>::HTSC()
-    : m_size(c_default_size)
-    , m_table(c_default_size + 1)
-    , i_index(c_default_size)
+    : m_size(10)
+    , m_table(m_size + 1)
+    , i_index(m_size)
 {}
 
 template <class T>
 HTSC<T>::HTSC(std::size_t size)
     : m_size(size)
-    , m_table(size + 1)
-    , i_index(size)
-{}
-
-template <class T>
-HTSC<T>::HTSC(const HTSC<T>& other)
-    : m_size(other.m_size)
-    , m_table(other.m_table)
-    , i_index(other.i_index)
+    , m_table(m_size + 1)
+    , i_index(m_size)
 {}
 
 template <class T>
@@ -87,15 +80,4 @@ bool HTSC<T>::find(const T& key)
         }
         return false;
     }
-}
-
-template <class T>
-HTSC<T>& HTSC<T>::operator=(const HTSC<T>& other)
-{
-    if (this != &other) {
-        m_size = other.m_size;
-        m_table = other.m_table;
-        i_index = other.i_index;
-    }
-    return *this;
 }
